@@ -70,6 +70,8 @@ public class LoginAct extends Activity {
             ((EditText) findViewById(R.id.txt_user_name)).setText(username);
             ((EditText) findViewById(R.id.txt_pass_word)).setText(password);
         }*/
+
+        // ld:ld9102
         ((EditText) findViewById(R.id.txt_user_name)).setText("ld");
         ((EditText) findViewById(R.id.txt_pass_word)).setText("ld9102");
 
