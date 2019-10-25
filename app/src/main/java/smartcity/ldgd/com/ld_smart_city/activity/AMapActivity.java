@@ -3,10 +3,8 @@ package smartcity.ldgd.com.ld_smart_city.activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -211,31 +209,12 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             }
 
             return bitmapDrawable;
-        } else if (clusterNum < 5) {
-
+        }  else {
             Drawable bitmapDrawable = mBackDrawAbles.get(2);
             if (bitmapDrawable == null) {
-                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
-                        Color.argb(159, 210, 154, 6)));
+                bitmapDrawable =   getApplication().getResources().getDrawable(
+                        R.drawable.bian);
                 mBackDrawAbles.put(2, bitmapDrawable);
-            }
-
-            return bitmapDrawable;
-        } else if (clusterNum < 10) {
-            Drawable bitmapDrawable = mBackDrawAbles.get(3);
-            if (bitmapDrawable == null) {
-                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
-                        Color.argb(199, 217, 114, 0)));
-                mBackDrawAbles.put(3, bitmapDrawable);
-            }
-
-            return bitmapDrawable;
-        } else {
-            Drawable bitmapDrawable = mBackDrawAbles.get(4);
-            if (bitmapDrawable == null) {
-                bitmapDrawable = new BitmapDrawable(null, drawCircle(radius,
-                        Color.argb(235, 215, 66, 2)));
-                mBackDrawAbles.put(4, bitmapDrawable);
             }
 
             return bitmapDrawable;
@@ -262,6 +241,6 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             builder.include(clusterItem.getPosition());
         }
         LatLngBounds latLngBounds = builder.build();
-        mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
+        mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
     }
 }
