@@ -237,11 +237,18 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
     @Override
     public void onClick(Marker marker, List<ClusterItem> clusterItems) {
 
-        LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (ClusterItem clusterItem : clusterItems) {
-            builder.include(clusterItem.getPosition());
+
+        if(clusterItems.size() == 1){
+
+        }else{
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (ClusterItem clusterItem : clusterItems) {
+                builder.include(clusterItem.getPosition());
+            }
+            LatLngBounds latLngBounds = builder.build();
+            mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
+
         }
-        LatLngBounds latLngBounds = builder.build();
-        mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
+
     }
 }
