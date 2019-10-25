@@ -76,6 +76,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             mUiSettings.setLogoPosition(AMapOptions.LOGO_POSITION_BOTTOM_RIGHT);
             // 设置地图默认的缩放按钮是否显示
             mUiSettings.setZoomControlsEnabled(false);
+            // 设置地图缩放比例
+            mAMap.moveCamera(CameraUpdateFactory.zoomTo(5f));
 
 
         }
@@ -180,7 +182,6 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
                 LatLngBounds latLngBounds = builder.build();
                 //    mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
                 mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
-                mAMap.moveCamera(CameraUpdateFactory.zoomTo(5f));
                 // mAMap.moveCamera(CameraUpdateFactory.zoomTo(3));
 
             }
