@@ -240,6 +240,18 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
 
         if(clusterItems.size() == 1){
 
+          /*  // 将marker所在的经纬度的信息转化成屏幕上的坐标
+            Point p = mBaiduMap.getProjection().toScreenLocation(
+                    position);
+            p.y -= 120;
+            LatLng llInfo = mBaiduMap.getProjection()
+                    .fromScreenLocation(p);
+            View location = View.inflate(BaiduMapActivity.this,
+                    R.layout.baidu_map_marker_info_item, null);
+            mInfoWindow = new InfoWindow(location, llInfo, 0);
+            // 显示InfoWindow
+            mBaiduMap.showInfoWindow(mInfoWindow);*/
+
         }else{
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (ClusterItem clusterItem : clusterItems) {
