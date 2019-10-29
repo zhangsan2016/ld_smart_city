@@ -147,7 +147,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     }
 
     /**
-     * 添加一个聚合组
+     * 添加一个聚合
      *
      * @param cluster
      */
