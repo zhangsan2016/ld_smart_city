@@ -10,6 +10,7 @@ import android.util.Log;
 import android.util.LruCache;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -36,7 +37,7 @@ import smartcity.ldgd.com.ld_smart_city.util.LogUtil;
  * 整体设计采用了两个线程,一个线程用于计算组织聚合数据,一个线程负责处理Marker相关操作
  */
 public class ClusterOverlay implements AMap.OnCameraChangeListener,
-        AMap.OnMarkerClickListener {
+        AMap.OnMarkerClickListener , AMap.OnMapClickListener ,AMap.InfoWindowAdapter{
     private AMap mAMap;
     private Context mContext;
     private List<List<ClusterItem>> mClusterss;
@@ -55,6 +56,9 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private Handler mSignClusterHandler;
     private float mPXInMeters;
     private boolean mIsCanceled = false;
+
+    // 当前点击的 marker
+    private Marker currentMarker;
 
     /**
      * 构造函数
@@ -81,6 +85,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mClusterDistance = mPXInMeters * mClusterSize;
         amap.setOnCameraChangeListener(this);
         amap.setOnMarkerClickListener(this);
+        amap.setInfoWindowAdapter(this);// 设置自定义InfoWindow样式
         initThreadHandler();
 
     }
@@ -114,6 +119,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mClusterDistance = mPXInMeters * mClusterSize;
         amap.setOnCameraChangeListener(this);
         amap.setOnMarkerClickListener(this);
+        amap.setOnMapClickListener(this);
         initThreadHandler();
         assignClusters();
     }
@@ -180,7 +186,6 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         mMarkerHandlerThread.quit();
         for (Marker marker : mAddMarkers) {
             marker.remove();
-
         }
         mAddMarkers.clear();
         mLruCache.evictAll();
@@ -200,22 +205,31 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
     }
 
+    private int preRoom = 0;
     @Override
     public void onCameraChangeFinish(CameraPosition arg0) {
         // 获取当前缩放级别下，地图上1像素点对应的长度，单位米。
         mPXInMeters = mAMap.getScalePerPixel();
         mClusterDistance = mPXInMeters * mClusterSize;
-        assignClusters();
+
+        int zoom = (int) mAMap.getCameraPosition().zoom;
+        if (preRoom != zoom) {
+            preRoom = zoom;
+            assignClusters();
+        }
     }
 
     //点击事件
     @Override
     public boolean onMarkerClick(Marker arg0) {
+
         if (mClusterClickListener == null) {
             return true;
         }
         Cluster cluster = (Cluster) arg0.getObject();
         if (cluster != null) {
+            // 保存当前点击的 Marker
+            currentMarker = arg0;
             mClusterClickListener.onClick(arg0, cluster.getClusterItems());
             return true;
         }
@@ -392,6 +406,28 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         marker.setIcon(getBitmapDes(cluster.getClusterCount()));
 
 
+    }
+
+    /**
+     *  地图点击事件
+     * @param latLng
+     */
+    @Override
+    public void onMapClick(LatLng latLng) {
+        if (currentMarker != null && currentMarker.isInfoWindowShown()) {
+            //这个是隐藏infowindow窗口的方法
+            currentMarker.hideInfoWindow();
+        }
+    }
+
+    @Override
+    public View getInfoWindow(Marker marker) {
+        return new View(mContext);
+    }
+
+    @Override
+    public View getInfoContents(Marker marker) {
+        return null;
     }
 
 

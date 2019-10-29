@@ -238,9 +238,18 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
     public void onClick(Marker marker, List<ClusterItem> clusterItems) {
 
 
-        if(clusterItems.size() == 1){
-
-          /*  // 将marker所在的经纬度的信息转化成屏幕上的坐标
+        if(clusterItems.size() != 1){
+            marker.setInfoWindowEnable(false);
+            LatLngBounds.Builder builder = new LatLngBounds.Builder();
+            for (ClusterItem clusterItem : clusterItems) {
+                builder.include(clusterItem.getPosition());
+            }
+            LatLngBounds latLngBounds = builder.build();
+            mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
+        }else{
+            marker.setInfoWindowEnable(true);
+            marker.showInfoWindow();
+              /*  // 将marker所在的经纬度的信息转化成屏幕上的坐标
             Point p = mBaiduMap.getProjection().toScreenLocation(
                     position);
             p.y -= 120;
@@ -252,15 +261,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             // 显示InfoWindow
             mBaiduMap.showInfoWindow(mInfoWindow);*/
 
-        }else{
-            LatLngBounds.Builder builder = new LatLngBounds.Builder();
-            for (ClusterItem clusterItem : clusterItems) {
-                builder.include(clusterItem.getPosition());
-            }
-            LatLngBounds latLngBounds = builder.build();
-            mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
-
         }
+
 
     }
 }
