@@ -35,7 +35,7 @@ import smartcity.ldgd.com.ld_smart_city.cluster.ClusterOverlay;
 import smartcity.ldgd.com.ld_smart_city.cluster.ClusterRender;
 import smartcity.ldgd.com.ld_smart_city.cluster.RegionItem;
 
-public class AMapActivity extends AppCompatActivity implements ClusterRender, AMap.OnMapLoadedListener,ClusterClickListener {
+public class AMapActivity extends AppCompatActivity implements ClusterRender, AMap.OnMapLoadedListener, ClusterClickListener {
 
     private MapView mMapView = null;
     private AMap mAMap = null;
@@ -210,10 +210,10 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             }
 
             return bitmapDrawable;
-        }  else {
+        } else {
             Drawable bitmapDrawable = mBackDrawAbles.get(2);
             if (bitmapDrawable == null) {
-                bitmapDrawable =   getApplication().getResources().getDrawable(
+                bitmapDrawable = getApplication().getResources().getDrawable(
                         R.drawable.bian);
                 mBackDrawAbles.put(2, bitmapDrawable);
             }
@@ -221,6 +221,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             return bitmapDrawable;
         }
     }
+
+
 
     private Bitmap drawCircle(int radius, int color) {
 
@@ -238,7 +240,7 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
     public void onClick(Marker marker, List<ClusterItem> clusterItems) {
 
 
-        if(clusterItems.size() != 1){
+        if (clusterItems.size() != 1) {
             marker.setInfoWindowEnable(false);
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (ClusterItem clusterItem : clusterItems) {
@@ -246,7 +248,7 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             }
             LatLngBounds latLngBounds = builder.build();
             mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
-        }else{
+        } else {
             marker.setInfoWindowEnable(true);
             marker.showInfoWindow();
               /*  // 将marker所在的经纬度的信息转化成屏幕上的坐标
