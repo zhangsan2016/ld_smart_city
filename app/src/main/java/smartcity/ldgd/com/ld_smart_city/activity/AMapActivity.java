@@ -180,8 +180,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
                 }
 
                 LatLngBounds latLngBounds = builder.build();
-                //    mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
                 mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
+                mAMap.moveCamera(CameraUpdateFactory.zoomTo(5f));
                 // mAMap.moveCamera(CameraUpdateFactory.zoomTo(3));
 
             }
