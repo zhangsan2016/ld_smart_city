@@ -16,6 +16,7 @@ public class Cluster {
     private LatLng mLatLng;
     private List<ClusterItem> mClusterItems;
     private Marker mMarker;
+    private String title;
 
 
     public Cluster( LatLng latLng) {
@@ -23,6 +24,12 @@ public class Cluster {
         mLatLng = latLng;
         mClusterItems = new ArrayList<ClusterItem>();
     }
+    public Cluster( LatLng latLng,String title) {
+
+        mLatLng = latLng;
+        mClusterItems = new ArrayList<ClusterItem>();
+    }
+
 
     public   void addClusterItem(ClusterItem clusterItem) {
         mClusterItems.add(clusterItem);
@@ -48,5 +55,13 @@ public class Cluster {
 
     List<ClusterItem> getClusterItems() {
         return mClusterItems;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

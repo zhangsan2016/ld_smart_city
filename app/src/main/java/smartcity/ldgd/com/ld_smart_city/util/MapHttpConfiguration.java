@@ -6,7 +6,7 @@ package smartcity.ldgd.com.ld_smart_city.util;
  * 说明：http交互配置
  */
 
-public class HttpConfiguration {
+public class MapHttpConfiguration {
     // content-type 用户登录
     public  static  String CONTENT_TYPE_USER_LOGIN = "user/login";
     // content-type 项目列表

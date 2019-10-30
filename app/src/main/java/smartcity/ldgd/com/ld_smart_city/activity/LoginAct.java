@@ -26,7 +26,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import smartcity.ldgd.com.ld_smart_city.R;
 import smartcity.ldgd.com.ld_smart_city.entity.LoginJson;
-import smartcity.ldgd.com.ld_smart_city.util.HttpConfiguration;
+import smartcity.ldgd.com.ld_smart_city.util.MapHttpConfiguration;
 import smartcity.ldgd.com.ld_smart_city.util.HttpUtil;
 import smartcity.ldgd.com.ld_smart_city.util.LogUtil;
 
@@ -113,7 +113,7 @@ public class LoginAct extends Activity {
             @Override
             public void run() {
 
-                String url = HttpConfiguration.LOGIN_URl;
+                String url = MapHttpConfiguration.LOGIN_URl;
 
                 RequestBody requestBody = new FormBody.Builder()
                         .add("username", username)

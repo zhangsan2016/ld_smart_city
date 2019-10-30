@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -17,7 +16,6 @@ import com.amap.api.maps.CameraUpdateFactory;
 import com.amap.api.maps.MapView;
 import com.amap.api.maps.UiSettings;
 import com.amap.api.maps.model.CustomMapStyleOptions;
-import com.amap.api.maps.model.LatLng;
 import com.amap.api.maps.model.LatLngBounds;
 import com.amap.api.maps.model.Marker;
 
@@ -28,14 +26,15 @@ import java.util.List;
 import java.util.Map;
 
 import smartcity.ldgd.com.ld_smart_city.R;
-import smartcity.ldgd.com.ld_smart_city.cluster.Cluster;
+import smartcity.ldgd.com.ld_smart_city.base.BaseMapActivity;
 import smartcity.ldgd.com.ld_smart_city.cluster.ClusterClickListener;
 import smartcity.ldgd.com.ld_smart_city.cluster.ClusterItem;
 import smartcity.ldgd.com.ld_smart_city.cluster.ClusterOverlay;
 import smartcity.ldgd.com.ld_smart_city.cluster.ClusterRender;
-import smartcity.ldgd.com.ld_smart_city.cluster.RegionItem;
+import smartcity.ldgd.com.ld_smart_city.entity.LoginJson;
+import smartcity.ldgd.com.ld_smart_city.util.LogUtil;
 
-public class AMapActivity extends AppCompatActivity implements ClusterRender, AMap.OnMapLoadedListener, ClusterClickListener {
+public class AMapActivity extends BaseMapActivity implements ClusterRender, AMap.OnMapLoadedListener, ClusterClickListener {
 
     private MapView mMapView = null;
     private AMap mAMap = null;
@@ -44,6 +43,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
     private ClusterOverlay mClusterOverlay;
     private UiSettings mUiSettings;
     private Map<Integer, Drawable> mBackDrawAbles = new HashMap<Integer, Drawable>();
+    // 登录返回参数
+    private LoginJson loginJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,11 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
         //在activity执行onCreate时执行mMapView.onCreate(savedInstanceState)，创建地图
         mMapView.onCreate(savedInstanceState);
 
+
+        // 获取传递过来的参数
+        getData();
+
+        // 初始化地图
         initMap();
 
 
@@ -81,6 +87,11 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
 
 
         }
+    }
+
+    public void getData() {
+        loginJson = (LoginJson) getIntent().getSerializableExtra("loginInfo");
+        LogUtil.e("xxx loginInfo = " + loginJson.getData().getToken().getToken());
     }
 
 
@@ -148,7 +159,7 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
         //添加测试数据
         new Thread() {
             public void run() {
-                double[] latList = new double[]{23.058877, 26.725366, 31.970214};
+              /*  double[] latList = new double[]{23.058877, 26.725366, 31.970214};
                 double[] lonList = new double[]{115.800238, 107.011176, 114.437933};
 
                 mClusterOverlay = new ClusterOverlay(mAMap, dp2px(getApplicationContext(), 0), getApplicationContext());
@@ -171,8 +182,7 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
                         double lon = Math.random() + lonB;
 
                         LatLng latLng = new LatLng(lat, lon, false);
-                        RegionItem regionItem = new RegionItem(latLng,
-                                "test" + j);
+                        RegionItem regionItem = new RegionItem(latLng);
                         cluster.addClusterItem(regionItem);
                     }
 
@@ -182,12 +192,21 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
                 LatLngBounds latLngBounds = builder.build();
                 mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
                 mAMap.moveCamera(CameraUpdateFactory.zoomTo(5f));
-                // mAMap.moveCamera(CameraUpdateFactory.zoomTo(3));
+                // mAMap.moveCamera(CameraUpdateFactory.zoomTo(3));*/
+
+
+                // 通过网络获取项目列表
+                mClusterOverlay = new ClusterOverlay(mAMap, dp2px(getApplicationContext(), 0), getApplicationContext());
+                mClusterOverlay.setClusterRenderer(AMapActivity.this);
+                mClusterOverlay.setOnClusterClickListener(AMapActivity.this);
+                String token = loginJson.getData().getToken().getToken();
+                getProject(token,mAMap,mClusterOverlay);
 
             }
 
         }.start();
     }
+
 
     /**
      * 根据手机的分辨率从 dp 的单位 转成为 px(像素)
@@ -203,9 +222,8 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
         if (clusterNum == 1) {
             Drawable bitmapDrawable = mBackDrawAbles.get(1);
             if (bitmapDrawable == null) {
-                bitmapDrawable =
-                        getApplication().getResources().getDrawable(
-                                R.drawable.icon_openmap_mark);
+                // bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_openmap_mark);
+                bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_gcoding);
                 mBackDrawAbles.put(1, bitmapDrawable);
             }
 
@@ -221,7 +239,6 @@ public class AMapActivity extends AppCompatActivity implements ClusterRender, AM
             return bitmapDrawable;
         }
     }
-
 
 
     private Bitmap drawCircle(int radius, int color) {
