@@ -422,6 +422,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
     @Override
     public View getInfoWindow(Marker marker) {
+
         return new View(mContext);
     }
 

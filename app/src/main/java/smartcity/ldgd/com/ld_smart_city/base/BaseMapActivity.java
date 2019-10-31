@@ -93,7 +93,7 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                         for (ProjectJson.DataBeanX.ProjectInfo projectInfo : projectList) {
 
                             try {
-                                final CountDownLatch  latch = new CountDownLatch(1);
+                                final CountDownLatch latch = new CountDownLatch(1);
                                 // 用于计算当前显示范围
                                 LatLng ll = new LatLng(Double.parseDouble(projectInfo.getLat()), Double.parseDouble(projectInfo.getLng()));
                                 Cluster cluster = new Cluster(ll, projectInfo.getTitle());
@@ -112,7 +112,6 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                             }
 
                         }
-
 
                         LatLngBounds bounds = builder.build();
                         // 设置显示在屏幕中的地图地理范围
@@ -170,6 +169,10 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                         for (DeviceLampJson.DataBeanX.DeviceLamp deviceLamp : projectList) {
 
                             if (deviceLamp.getLAT().equals("") || deviceLamp.getLNG().equals("")) {
+                                break;
+                            }
+                            if (deviceLamp.getNAME().contains("米泉路")) {
+                                LogUtil.e("xxx 米泉路" + deviceLamp.getLAT() + "  " + deviceLamp.getLNG());
                                 break;
                             }
 

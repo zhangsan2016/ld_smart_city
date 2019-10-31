@@ -261,10 +261,15 @@ public class AMapActivity extends BaseMapActivity implements ClusterRender, AMap
             marker.setInfoWindowEnable(false);
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (ClusterItem clusterItem : clusterItems) {
+                if(clusterItem.getPosition().equals("") || clusterItem.getPosition() == null){
+                    LogUtil.e("onClick  clusterItem.getPosition() = null ");
+                    builder.include(clusterItem.getPosition());
+
+                }
                 builder.include(clusterItem.getPosition());
             }
             LatLngBounds latLngBounds = builder.build();
-            mAMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
+            mAMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 100));
         } else {
             marker.setInfoWindowEnable(true);
             marker.showInfoWindow();
