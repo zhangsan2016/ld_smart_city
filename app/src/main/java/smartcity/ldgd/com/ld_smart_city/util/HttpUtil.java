@@ -161,27 +161,25 @@ public class HttpUtil {
      * @param contentType  Content-type: application/json
      * @param requestBody  请求的主体
      */
-    public static void sendHttpRequest(final String address, final okhttp3.Callback callback, final String token, final String contentType, final RequestBody requestBody) {
+    public static void sendHttpRequest(final String address, final okhttp3.Callback callback, final String token, final RequestBody requestBody) {
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 OkHttpClient client = new OkHttpClient.Builder()
                         .connectTimeout(100, TimeUnit.SECONDS)//设置连接超时时间
-                        .readTimeout(20, TimeUnit.SECONDS).build();//设置读取超时时间;
+                        .readTimeout(200, TimeUnit.SECONDS).build();//设置读取超时时间;
 
                 Request request;
                 if(requestBody == null){
                     request = new Request.Builder()
                             .addHeader("X-auth-token", token)
                             .header("Accept-Encoding", "deflate")
-                            .addHeader("content-type", contentType)
                             .url(address).build();
                 }else{
                      request = new Request.Builder()
                             .addHeader("X-auth-token", token)
                             .header("Accept-Encoding", "deflate")
-                            .addHeader("content-type", contentType)
                             .post(requestBody)
                             .url(address).build();
                 }

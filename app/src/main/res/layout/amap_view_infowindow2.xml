@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="127dp"
-    android:background="@drawable/baidu_map_location_tips"
+    android:background="#0000"
     android:orientation="horizontal">
 
     <LinearLayout
+        android:background="@color/colorAccent"
         android:layout_width="209dp"
         android:layout_height="127dp"
         android:orientation="vertical">

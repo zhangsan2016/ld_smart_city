@@ -67,7 +67,6 @@ public abstract class BaseMapActivity extends AppCompatActivity {
             public void run() {
 
                 String url = MapHttpConfiguration.PROJECT_LIST_URL;
-                String contentType = MapHttpConfiguration.CONTENT_TYPE_PROJECT_LIST;
 
                 HttpUtil.sendHttpRequest(url, new Callback() {
 
@@ -120,7 +119,7 @@ public abstract class BaseMapActivity extends AppCompatActivity {
 
 
                     }
-                }, token, contentType, null);
+                }, token, null);
 
 
             }
@@ -137,7 +136,6 @@ public abstract class BaseMapActivity extends AppCompatActivity {
             @Override
             public void run() {
                 String url = MapHttpConfiguration.DEVICE_LAMP_LIST_URL;
-                String contentType = MapHttpConfiguration.CONTENT_TYPE_DEVICE_LAMP_LIST;
 
                 // 创建请求的参数body
                 //   String postBody = "{\"where\":{\"PROJECT\":" + title + "},\"size\":5000}";
@@ -185,7 +183,7 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                         latch.countDown();
 
                     }
-                }, token, contentType, body);
+                }, token, body);
             }
         }).start();
 
