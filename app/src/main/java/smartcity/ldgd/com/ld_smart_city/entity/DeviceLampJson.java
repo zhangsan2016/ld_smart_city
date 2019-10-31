@@ -174,6 +174,52 @@ public class DeviceLampJson {
             private double Warning_state;
             private String Alarm_Light_Mode;
 
+            @Override
+            public String toString() {
+                return "DeviceLamp{" +
+                        "UUID='" + UUID + '\'' +
+                        ", LAT='" + LAT + '\'' +
+                        ", LNG='" + LNG + '\'' +
+                        ", NAME='" + NAME + '\'' +
+                        ", TYPE=" + TYPE +
+                        ", PROJECT='" + PROJECT + '\'' +
+                        ", SUBGROUP='" + SUBGROUP + '\'' +
+                        ", _id=" + _id +
+                        ", FUUID='" + FUUID + '\'' +
+                        ", smsphone='" + smsphone + '\'' +
+                        ", subgroups='" + subgroups + '\'' +
+                        ", admin='" + admin + '\'' +
+                        ", FirDimming=" + FirDimming +
+                        ", SecDimming=" + SecDimming +
+                        ", Temp=" + Temp +
+                        ", Illu=" + Illu +
+                        ", _modified='" + _modified + '\'' +
+                        ", STATE=" + STATE +
+                        ", LampDiameter='" + LampDiameter + '\'' +
+                        ", Power_Manufacturer='" + Power_Manufacturer + '\'' +
+                        ", Lamp_RatedCurrent='" + Lamp_RatedCurrent + '\'' +
+                        ", Lamp_Ratedvoltage='" + Lamp_Ratedvoltage + '\'' +
+                        ", lampType='" + lampType + '\'' +
+                        ", Lamp_Manufacturer='" + Lamp_Manufacturer + '\'' +
+                        ", Lamp_Num='" + Lamp_Num + '\'' +
+                        ", PoleProductionDate='" + PoleProductionDate + '\'' +
+                        ", Pole_height='" + Pole_height + '\'' +
+                        ", Rated_power='" + Rated_power + '\'' +
+                        ", Subcommunicate_mode='" + Subcommunicate_mode + '\'' +
+                        ", Current=" + Current +
+                        ", Power=" + Power +
+                        ", Leak_curt=" + Leak_curt +
+                        ", Gprs_csq=" + Gprs_csq +
+                        ", Power_Factor=" + Power_Factor +
+                        ", Energy=" + Energy +
+                        ", Voltage=" + Voltage +
+                        ", RESET_COUNT=" + RESET_COUNT +
+                        ", Version='" + Version + '\'' +
+                        ", Warning_state=" + Warning_state +
+                        ", Alarm_Light_Mode='" + Alarm_Light_Mode + '\'' +
+                        '}';
+            }
+
             public String getUUID() {
                 return UUID;
             }

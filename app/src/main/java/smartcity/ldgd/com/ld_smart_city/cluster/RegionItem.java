@@ -16,9 +16,9 @@ public class RegionItem implements ClusterItem {
         this.mLatLng = mLatLng;
     }
 
-    public RegionItem(LatLng latLng, DeviceLampJson.DataBeanX.DeviceLamp deviceLamp ) {
-        mLatLng=latLng;
-        deviceLamp=deviceLamp;
+    public RegionItem(LatLng latLng, DeviceLampJson.DataBeanX.DeviceLamp deviceLamp) {
+        mLatLng = latLng;
+        this.deviceLamp = deviceLamp;
     }
 
     @Override

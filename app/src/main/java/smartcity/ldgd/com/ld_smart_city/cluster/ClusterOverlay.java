@@ -10,7 +10,9 @@ import android.util.Log;
 import android.util.LruCache;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.amap.api.maps.AMap;
@@ -423,7 +425,32 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     @Override
     public View getInfoWindow(Marker marker) {
 
-        return new View(mContext);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.amap_view_infowindow, null);
+        LinearLayout navigation = (LinearLayout) view.findViewById(R.id.navigation_LL);
+        LinearLayout call = (LinearLayout) view.findViewById(R.id.call_LL);
+        TextView nameTV = (TextView) view.findViewById(R.id.agent_name);
+        TextView addrTV = (TextView) view.findViewById(R.id.agent_addr);
+
+        Cluster cluster = (Cluster) marker.getObject();
+        List<ClusterItem> clusterItems = cluster.getClusterItems();
+        final RegionItem regionItem = (RegionItem) clusterItems.get(0);
+
+        nameTV.setText(regionItem.getDeviceLamp().getNAME());
+        addrTV.setText("sdfsdfsdddddddddddddddddddddddddddddd");
+
+        navigation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                   LogUtil.e("xxxx navigation 被点击 = " + regionItem.getDeviceLamp().toString());
+            }
+        });
+        call.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LogUtil.e("xxxx call 被点击");
+            }
+        });
+        return view;
     }
 
     @Override
