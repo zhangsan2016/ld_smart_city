@@ -200,7 +200,7 @@ public class AMapActivity extends BaseMapActivity implements ClusterRender, AMap
                 mClusterOverlay.setClusterRenderer(AMapActivity.this);
                 mClusterOverlay.setOnClusterClickListener(AMapActivity.this);
                 String token = loginJson.getData().getToken().getToken();
-                getProject(token,mAMap,mClusterOverlay);
+                getProject(token, mAMap, mClusterOverlay);
 
             }
 
@@ -219,25 +219,34 @@ public class AMapActivity extends BaseMapActivity implements ClusterRender, AMap
     @Override
     public Drawable getDrawAble(int clusterNum) {
         int radius = dp2px(getApplicationContext(), 80);
-        if (clusterNum == 1) {
-            Drawable bitmapDrawable = mBackDrawAbles.get(1);
-            if (bitmapDrawable == null) {
-                // bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_openmap_mark);
-                bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_gcoding);
-                mBackDrawAbles.put(1, bitmapDrawable);
-            }
 
-            return bitmapDrawable;
-        } else {
-            Drawable bitmapDrawable = mBackDrawAbles.get(2);
+        Drawable bitmapDrawable = null;
+        if (clusterNum == 1) {
+            bitmapDrawable = mBackDrawAbles.get(clusterNum);
             if (bitmapDrawable == null) {
                 bitmapDrawable = getApplication().getResources().getDrawable(
                         R.drawable.bian);
+                mBackDrawAbles.put(1, bitmapDrawable);
+            }
+
+        } else if (clusterNum == 2) {
+            bitmapDrawable = mBackDrawAbles.get(clusterNum);
+            if (bitmapDrawable == null) {
+                // bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_openmap_mark);
+                bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_gcoding);
                 mBackDrawAbles.put(2, bitmapDrawable);
             }
 
-            return bitmapDrawable;
+        } else if (clusterNum == 3) {
+            bitmapDrawable = mBackDrawAbles.get(clusterNum);
+            if (bitmapDrawable == null) {
+                // bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.icon_openmap_mark);
+                bitmapDrawable = getApplication().getResources().getDrawable(R.drawable.amap_ebox);
+                mBackDrawAbles.put(3, bitmapDrawable);
+            }
+
         }
+        return bitmapDrawable;
     }
 
 
@@ -261,7 +270,7 @@ public class AMapActivity extends BaseMapActivity implements ClusterRender, AMap
             marker.setInfoWindowEnable(false);
             LatLngBounds.Builder builder = new LatLngBounds.Builder();
             for (ClusterItem clusterItem : clusterItems) {
-                if(clusterItem.getPosition().equals("") || clusterItem.getPosition() == null){
+                if (clusterItem.getPosition().equals("") || clusterItem.getPosition() == null) {
                     LogUtil.e("onClick  clusterItem.getPosition() = null ");
                     builder.include(clusterItem.getPosition());
 

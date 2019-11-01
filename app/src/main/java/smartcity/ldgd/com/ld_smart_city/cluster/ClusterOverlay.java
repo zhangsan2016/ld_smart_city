@@ -89,6 +89,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         amap.setOnCameraChangeListener(this);
         amap.setOnMarkerClickListener(this);
         amap.setInfoWindowAdapter(this);// 设置自定义InfoWindow样式
+        amap.setOnMapClickListener(this); // 地图点击事件
         initThreadHandler();
 
     }
@@ -241,6 +242,15 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     }
 
 
+    @Override
+    public void onMapClick(LatLng latLng) {
+        if (currentMarker != null && currentMarker.isInfoWindowShown()) {
+            //这个是隐藏infowindow窗口的方法
+            currentMarker.hideInfoWindow();
+        }
+    }
+
+
     /**
      * 将聚合元素添加至地图上
      */
@@ -271,8 +281,24 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     private void addSingleClusterToMap(Cluster cluster) {
         LatLng latlng = cluster.getCenterLatLng();
         MarkerOptions markerOptions = new MarkerOptions();
+
+        // 类型 1 等于 电箱，2等于路灯
+        BitmapDescriptor bd = null;
+        if (cluster.getClusterCount() > 1){
+             bd = getBitmapDes(1);
+        }else {
+          RegionItem clusterItem = (RegionItem) cluster.getClusterItems().get(0);
+            // 判断路灯还是电箱
+            if(clusterItem.getDeviceLamp().getTYPE()  == 2){
+                bd = getBitmapDes(2);
+            }else if(clusterItem.getDeviceLamp().getTYPE()  == 1){
+                bd = getBitmapDes(3);
+            }
+
+        }
+
         markerOptions.anchor(0.5f, 0.5f)
-                .icon(getBitmapDes(cluster.getClusterCount())).position(latlng);
+                .icon(bd).position(latlng);
         Marker marker = mAMap.addMarker(markerOptions);
         marker.setAnimation(mADDAnimation);
         marker.setObject(cluster);
@@ -382,10 +408,10 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         BitmapDescriptor bitmapDescriptor = mLruCache.get(num);
         if (bitmapDescriptor == null) {
             TextView textView = new TextView(mContext);
-            if (num > 1) {
+          /*  if (num == 1) {
                 String tile = String.valueOf(num);
                 textView.setText(tile);
-            }
+            }*/
             textView.setGravity(Gravity.CENTER);
             textView.setTextColor(Color.BLACK);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
@@ -412,18 +438,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
 
     }
 
-    /**
-     * 地图点击事件
-     *
-     * @param latLng
-     */
-    @Override
-    public void onMapClick(LatLng latLng) {
-        if (currentMarker != null && currentMarker.isInfoWindowShown()) {
-            //这个是隐藏infowindow窗口的方法
-            currentMarker.hideInfoWindow();
-        }
-    }
+
 
     @Override
     public View getInfoWindow(Marker marker) {
