@@ -129,7 +129,7 @@ public class LoginAct extends Activity {
                         LoginAct.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                showToast("连接服务器异常！");
+                                showToast("连接服务器失败！");
                             }
                         });
                         stopProgress();

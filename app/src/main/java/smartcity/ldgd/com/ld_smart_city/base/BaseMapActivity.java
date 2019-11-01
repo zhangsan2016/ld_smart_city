@@ -92,7 +92,9 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                         for (ProjectJson.DataBeanX.ProjectInfo projectInfo : projectList) {
 
                             try {
+                                  // 用于同步线程
                                 final CountDownLatch latch = new CountDownLatch(1);
+
                                 // 用于计算当前显示范围
                                 LatLng ll = new LatLng(Double.parseDouble(projectInfo.getLat()), Double.parseDouble(projectInfo.getLng()));
                                 Cluster cluster = new Cluster(ll, projectInfo.getTitle());
@@ -135,6 +137,9 @@ public abstract class BaseMapActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
+
+
                 String url = MapHttpConfiguration.DEVICE_LAMP_LIST_URL;
 
                 // 创建请求的参数body
@@ -174,6 +179,81 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                             }
                             if (deviceLamp.getNAME().contains("米泉路")) {
                                 LogUtil.e("xxx 米泉路" + deviceLamp.getLAT() + "  " + deviceLamp.getLNG());
+                                break;
+                            }
+
+                            LatLng ll = new LatLng(Double.parseDouble(deviceLamp.getLAT()), Double.parseDouble(deviceLamp.getLNG()), false);
+                            RegionItem regionItem = new RegionItem(ll, deviceLamp);
+                            cluster.addClusterItem(regionItem);
+                        }
+
+                        // 获取该项目的电箱
+                        final CountDownLatch latch2 = new CountDownLatch(1);
+                        getDeviceEbox(title, token, cluster, latch2);
+
+                        try {
+                            latch2.await();
+                            //让latch中的数值减一
+                            latch.countDown();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                }, token, body);
+            }
+        }).start();
+
+    }
+
+
+    /**
+     *   获取所有电箱
+     * @param title 获取的项目名
+     * @param token 服务器token
+     * @param cluster  保存的集合
+     * @param latch
+     */
+    public void getDeviceEbox(final String title, final String token, final Cluster cluster, final CountDownLatch latch) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String url = MapHttpConfiguration.DEVICE_EBOX_URL;
+
+                // 创建请求的参数body
+                //   String postBody = "{\"where\":{\"PROJECT\":" + title + "},\"size\":5000}";
+                String postBody = "{\"where\":{\"PROJECT\":\"" + title + "\"},\"size\":5000}";
+                RequestBody body = FormBody.create(MediaType.parse("application/json"), postBody);
+
+                LogUtil.e("xxx postBody = " + postBody);
+
+                HttpUtil.sendHttpRequest(url, new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        LogUtil.e("xxx" + "失败" + e.toString());
+                        showToast("连接服务器异常！");
+                        stopProgress();
+
+                        //让latch中的数值减一
+                        latch.countDown();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        String json = response.body().string();
+                        LogUtil.e("xxx getDeviceEbox " + "成功" + json);
+
+                        // 解析返回过来的json
+                        Gson gson = new Gson();
+                        DeviceLampJson deviceLampJson = gson.fromJson(json, DeviceLampJson.class);
+                        List<DeviceLampJson.DataBeanX.DeviceLamp> projectList = deviceLampJson.getData().getData();
+
+                        for (DeviceLampJson.DataBeanX.DeviceLamp deviceLamp : projectList) {
+
+                            if (deviceLamp.getLAT().equals("") || deviceLamp.getLNG().equals("")) {
                                 break;
                             }
 

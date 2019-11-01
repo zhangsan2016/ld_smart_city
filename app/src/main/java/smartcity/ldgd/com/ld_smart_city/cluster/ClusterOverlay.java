@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amap.api.maps.AMap;
 import com.amap.api.maps.AMapUtils;
@@ -39,7 +40,7 @@ import smartcity.ldgd.com.ld_smart_city.util.LogUtil;
  * 整体设计采用了两个线程,一个线程用于计算组织聚合数据,一个线程负责处理Marker相关操作
  */
 public class ClusterOverlay implements AMap.OnCameraChangeListener,
-        AMap.OnMarkerClickListener , AMap.OnMapClickListener ,AMap.InfoWindowAdapter{
+        AMap.OnMarkerClickListener, AMap.OnMapClickListener, AMap.InfoWindowAdapter {
     private AMap mAMap;
     private Context mContext;
     private List<List<ClusterItem>> mClusterss;
@@ -70,7 +71,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      * @param context
      */
     public ClusterOverlay(AMap amap, int clusterSize, Context context) {
-     //   this(amap, null, clusterSize, context);
+        //   this(amap, null, clusterSize, context);
 
         //默认最多会缓存80张图片作为聚合显示元素图片,根据自己显示需求和app使用内存情况,可以修改数量
         mLruCache = new LruCache<Integer, BitmapDescriptor>(80) {
@@ -160,7 +161,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         List<ClusterItem> clusterItems = cluster.getClusterItems();
         for (int i = 0; i < clusterItems.size(); i++) {
             RegionItem regionItem = (RegionItem) clusterItems.get(i);
-            Cluster  clusterItem = new Cluster(regionItem.getPosition());
+            Cluster clusterItem = new Cluster(regionItem.getPosition());
             clusterItem.addClusterItem(regionItem);
             mClustersBulk.add(clusterItem);
         }
@@ -208,6 +209,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     }
 
     private int preRoom = 0;
+
     @Override
     public void onCameraChangeFinish(CameraPosition arg0) {
         // 获取当前缩放级别下，地图上1像素点对应的长度，单位米。
@@ -287,7 +289,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         //  mClusters.clear();
         //  LatLngBounds visibleBounds = mAMap.getProjection().getVisibleRegion().latLngBounds;
 
-        LogUtil.e("xxx mAMap.getCameraPosition().zoom  = " + mAMap.getCameraPosition().zoom );
+        LogUtil.e("xxx mAMap.getCameraPosition().zoom  = " + mAMap.getCameraPosition().zoom);
         if (mAMap.getCameraPosition().zoom < 7) {
 
             upView(mClusters);
@@ -411,7 +413,8 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     }
 
     /**
-     *  地图点击事件
+     * 地图点击事件
+     *
      * @param latLng
      */
     @Override
@@ -436,20 +439,23 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         final RegionItem regionItem = (RegionItem) clusterItems.get(0);
 
         nameTV.setText(regionItem.getDeviceLamp().getNAME());
-     //   addrTV.setText("sdfsdfsdddddddddddddddddddddddddddddd");
+        //   addrTV.setText("sdfsdfsdddddddddddddddddddddddddddddd");
 
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   LogUtil.e("xxxx navigation 被点击 = " + regionItem.getDeviceLamp().toString());
+                LogUtil.e("xxxx navigation 被点击 = " + regionItem.getDeviceLamp().toString());
+                Toast.makeText(mContext, "查看", Toast.LENGTH_SHORT).show();
             }
         });
         call.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LogUtil.e("xxxx call 被点击");
-            }
-        });
+                                    @Override
+                                    public void onClick(View v) {
+                                        LogUtil.e("xxxx call 被点击");
+                                        Toast.makeText(mContext, "控制", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+        );
         return view;
     }
 
