@@ -285,14 +285,14 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         // 类型 1 等于 电箱，2等于路灯
         BitmapDescriptor bd = null;
         if (cluster.getClusterCount() > 1){
-             bd = getBitmapDes(1);
+             bd = getBitmapDes(1,cluster.getClusterCount());
         }else {
           RegionItem clusterItem = (RegionItem) cluster.getClusterItems().get(0);
             // 判断路灯还是电箱
             if(clusterItem.getDeviceLamp().getTYPE()  == 2){
-                bd = getBitmapDes(2);
+                bd = getBitmapDes(2,0);
             }else if(clusterItem.getDeviceLamp().getTYPE()  == 1){
-                bd = getBitmapDes(3);
+                bd = getBitmapDes(3,0);
             }
 
         }
@@ -404,24 +404,24 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
     /**
      * 获取每个聚合点的绘制样式
      */
-    private BitmapDescriptor getBitmapDes(int num) {
-        BitmapDescriptor bitmapDescriptor = mLruCache.get(num);
+    private BitmapDescriptor getBitmapDes(int type,int num) {
+        BitmapDescriptor bitmapDescriptor = mLruCache.get( type);
         if (bitmapDescriptor == null) {
             TextView textView = new TextView(mContext);
-          /*  if (num == 1) {
+           if (num > 1) {
                 String tile = String.valueOf(num);
                 textView.setText(tile);
-            }*/
+            }
             textView.setGravity(Gravity.CENTER);
             textView.setTextColor(Color.BLACK);
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 15);
-            if (mClusterRender != null && mClusterRender.getDrawAble(num) != null) {
-                textView.setBackgroundDrawable(mClusterRender.getDrawAble(num));
+            if (mClusterRender != null && mClusterRender.getDrawAble(type) != null) {
+                textView.setBackgroundDrawable(mClusterRender.getDrawAble(type));
             } else {
                 textView.setBackgroundResource(R.drawable.defaultcluster);
             }
             bitmapDescriptor = BitmapDescriptorFactory.fromView(textView);
-            mLruCache.put(num, bitmapDescriptor);
+            mLruCache.put(type, bitmapDescriptor);
 
         }
         return bitmapDescriptor;
@@ -432,8 +432,10 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
      */
     private void updateCluster(Cluster cluster) {
 
+        LogUtil.e(" updateCluster 执行");
+
         Marker marker = cluster.getMarker();
-        marker.setIcon(getBitmapDes(cluster.getClusterCount()));
+        marker.setIcon(getBitmapDes(cluster.getClusterCount(),0));
 
 
     }
