@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="127dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/baidu_map_location_tips"
     android:orientation="horizontal">
 
     <LinearLayout
         android:layout_width="209dp"
-        android:layout_height="127dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/agent_name"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
             android:layout_marginTop="11dp"
             android:textSize="14sp" />
 
@@ -25,18 +23,126 @@
             android:layout_height="17dp"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
-            android:layout_marginTop="2dp"
             android:singleLine="true"
             android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/waitNum"
-            android:layout_width="wrap_content"
-            android:layout_height="17dp"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="2dp"
-            android:textColor="#1DA1F2"
-            android:textSize="12sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="17dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginRight="14dp"
+                android:layout_marginTop="2dp"
+                android:layout_weight="1"
+                android:singleLine="true"
+                android:text="电箱："
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
 
         <View
             android:layout_width="match_parent"
@@ -68,7 +174,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="导航"
+                    android:text="查看"
                     android:textSize="14sp" />
             </LinearLayout>
 
@@ -96,13 +202,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
-                    android:text="电话"
+                    android:text="控制"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
     <!-- 用来偏移inforwindow的位置-->
-<!--    <TextView
-        android:layout_width="38dp"
-        android:layout_height="match_parent" />-->
+    <!--    <TextView
+            android:layout_width="38dp"
+            android:layout_height="match_parent" />-->
 </LinearLayout>

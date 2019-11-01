@@ -235,7 +235,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
             mClusterClickListener.onClick(arg0, cluster.getClusterItems());
             return true;
         }
-        return false;
+        return true;
     }
 
 
@@ -436,7 +436,7 @@ public class ClusterOverlay implements AMap.OnCameraChangeListener,
         final RegionItem regionItem = (RegionItem) clusterItems.get(0);
 
         nameTV.setText(regionItem.getDeviceLamp().getNAME());
-        addrTV.setText("sdfsdfsdddddddddddddddddddddddddddddd");
+     //   addrTV.setText("sdfsdfsdddddddddddddddddddddddddddddd");
 
         navigation.setOnClickListener(new View.OnClickListener() {
             @Override

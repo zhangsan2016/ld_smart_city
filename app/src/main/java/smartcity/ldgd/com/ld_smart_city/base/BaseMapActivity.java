@@ -151,6 +151,9 @@ public abstract class BaseMapActivity extends AppCompatActivity {
                         LogUtil.e("xxx" + "失败" + e.toString());
                         showToast("连接服务器异常！");
                         stopProgress();
+
+                        //让latch中的数值减一
+                        latch.countDown();
                     }
 
                     @Override
