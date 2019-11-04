@@ -27,7 +27,9 @@ public class Cluster {
     public Cluster( LatLng latLng,String title) {
 
         mLatLng = latLng;
+        this.title = title;
         mClusterItems = new ArrayList<ClusterItem>();
+
     }
 
 
