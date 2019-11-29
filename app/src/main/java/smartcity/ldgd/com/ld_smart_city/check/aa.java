@@ -23,10 +23,10 @@ public class aa {
     public static void main(String[] args) {
         // 获取当前项目下的所有路灯
 
-        getDeviceLampList("中科洛丁展示项目/深圳展厅", "5a2acbf0-fbb4-11e9-807b-c164eeb87e5f");
-      // getDeviceLampList("中科洛丁展示项目/深圳展厅", "a9db04c0-faf7-11e9-807b-c164eeb87e5f");
+        //   getDeviceLampList("中科洛丁展示项目/深圳展厅", "5a2acbf0-fbb4-11e9-807b-c164eeb87e5f");
+        // getDeviceLampList("中科洛丁展示项目/深圳展厅", "a9db04c0-faf7-11e9-807b-c164eeb87e5f");
 
-
+        gethuibao("中科洛丁展示项目/深圳展厅", "5a2acbf0-fbb4-11e9-807b-c164eeb87e5f");
     }
 
 
@@ -59,6 +59,50 @@ public class aa {
 
                         String json = response.body().string();
                         System.out.println("xxx" + "成功" + json);
+
+
+                    }
+                }, token, body);
+            }
+        }).start();
+
+    }
+
+
+    /**
+     * 汇报设备配置
+     *
+     * @param title
+     * @param token
+     */
+    public static void gethuibao(final String title, final String token) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+               /* String url = "https://iot.sz-luoding.com:888/api/" + "device/reportConfig";
+                String postBody = "{\"UUID\":\"2016C0312000001200001192\",\"config\": {\"xml_config\": \"21351515615sdf1sd61fs651d65f465sd46f54s6d54f33998\"}}";*/
+
+                String url = "https://iot.sz-luoding.com:888/api/" + "device/viewByUUID";
+                String postBody = "{\"UUID\":\"2016C0312000001200001192\"}";
+
+
+                RequestBody body = FormBody.create(MediaType.parse("application/json"), postBody);
+
+
+                HttpUtil.sendHttpRequest(url, new Callback() {
+
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        System.out.println("" + "失败" + e.toString());
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+
+                        String json = response.body().string();
+                        System.out.println("" + "成功" + json);
 
 
                     }

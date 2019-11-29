@@ -15,6 +15,10 @@ public class MapHttpConfiguration {
     public static String  CONTENT_TYPE_DEVICE_LAMP_LIST = "v_device_lamp/list";
     // content-type 电箱列表
     public static  String DEVICE_EBOX = "v_device_ebox/list";
+    // content-type 汇报设备配置
+    public static  String REPORT_CONFIG = "device/reportConfig";
+    // content-type 单个设备信息
+    public static  String VIEW_BY_UUID = "device/viewByUUID";
 
 
 
@@ -25,7 +29,13 @@ public class MapHttpConfiguration {
     public static String PROJECT_LIST_URL = URL_BASE + CONTENT_TYPE_PROJECT_LIST;
     // 获取项目下路灯地址
     public static String DEVICE_LAMP_LIST_URL = URL_BASE + CONTENT_TYPE_DEVICE_LAMP_LIST;
-    // 获取电箱列表
+    // 获取电箱列表地址
     public static String DEVICE_EBOX_URL = URL_BASE + DEVICE_EBOX;
+    // 获取汇报设备配置地址
+    public static String REPORT_CONFIG_URL = URL_BASE + REPORT_CONFIG;
+    // 获取获取单个设备信息
+    public static String VIEW_BY_UUID_URL = URL_BASE + VIEW_BY_UUID;
+
+
 
 }
